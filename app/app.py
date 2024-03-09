@@ -5,6 +5,8 @@ def register_blueprints(app):
     app.register_blueprint(bp_v1, url_prefix='/v1')
     from app.api.emmbeding import emd_v1
     app.register_blueprint(emd_v1, url_prefix='/emd')
+    from app.api.movies_search import mvilvus_search
+    app.register_blueprint(mvilvus_search, url_prefix='/mv_search')
 
 def create_app():
     app = Flask(__name__)
