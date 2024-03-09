@@ -2,8 +2,10 @@ import os
 from langchain.llms import OpenAI
 from config.configs import BaseConfig
 from langchain.embeddings.openai import OpenAIEmbeddings
+from langchain.embeddings.huggingface import HuggingFaceEmbeddings
 configs = BaseConfig()
-
+import torch
+EMBEDDING_DEVICE = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
 class openai():
     def __init__(self):
         os.environ["OPENAI_API_KEY"] = configs.open_ai1
@@ -21,6 +23,10 @@ class openai():
                                       embedding_model_name="text-embedding-ada-002",
                                       model_kwargs={"device": "cuda"},
                                       encode_kwargs={"device": "cuda"},)
+        return embeddings
+
+    def huggface_model(self):
+        embeddings = HuggingFaceEmbeddings(model_name="D:\\model\\m3e",model_kwargs={'device': EMBEDDING_DEVICE})
         return embeddings
 
     def original_chat(self):

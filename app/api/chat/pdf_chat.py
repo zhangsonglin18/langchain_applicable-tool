@@ -34,6 +34,7 @@ async def question_history(
 
     # Convert chat history to list of tuples
     chat_history_tuples = []
+
     for message in chat_history:
         chat_history_tuples.append((message[0], message[1]))
 

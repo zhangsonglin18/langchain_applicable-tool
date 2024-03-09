@@ -10,7 +10,7 @@ ELASTIC_PASSWORD = "YGP1ww5oWzuagMHeN7aM"
 #     ca_certs="http_ca.crt",
 #     basic_auth=(ELASTIC_LOGIN, ELASTIC_PASSWORD)
 # )
-client = Elasticsearch(["https://elastic:YGP1ww5oWzuagMHeN7aM@192.168.248.131:9200"], verify_certs=False)
+client = Elasticsearch(["http://elastic:YGP1ww5oWzuagMHeN7aM@152.136.174.19:9200"], verify_certs=False)
 client_info = client.info()
 client_info_dict = dict(client_info)
 client_info_bigstring = json.dumps(client_info_dict, ensure_ascii=False, indent=4)
