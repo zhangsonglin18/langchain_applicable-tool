@@ -68,3 +68,7 @@ UPLOAD_PATH = os.getenv("UPLOAD_PATH", "tmp/qa-data")
 
 ############### Number of log files ###############
 LOGS_NUM = int(os.getenv("logs_num", "0"))
+
+Minio_HOST = '152.136.174.19:9000'
+Minio_ACCESS_KEY = 'admin'
+Minio_SECRET_KEY = 'admin123'
