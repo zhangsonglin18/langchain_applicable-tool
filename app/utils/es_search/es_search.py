@@ -1,7 +1,10 @@
 from elasticsearch import Elasticsearch
 from transformers import BertTokenizer, BertModel
 import torch
-
+from app.utils.embedding.m3e_embedding import *
+from data_conn.es8.es_tool import ESConnector
+embeding = M3E_embeddings()
+Es = ESConnector()
 
 def embeddings_doc(doc, tokenizer, model, max_length=300):
     encoded_dict = tokenizer.encode_plus(
@@ -34,7 +37,7 @@ def search_similar_cos(index_name, query_text, tokenizer, model, es, top_k=3):
             "script_score": {
                 "query": {"match_all": {}},
                 "script": {
-                    "source": "cosineSimilarity(params.queryVector, 'ask_vector') + 1.0",
+                    "source": "cosineSimilarity(params.queryVector, 'vector') + 1.0",
                     "lang": "painless",
                     "params": {
                         "queryVector": query_embedding.tolist()
@@ -54,13 +57,13 @@ def search_similar_cos(index_name, query_text, tokenizer, model, es, top_k=3):
 
 def search_similar_dot(index_name, query_text, tokenizer, model, es, top_k=3):
     query_embedding = embeddings_doc(query_text, tokenizer, model)
-    print(query_embedding.tolist())
+    # print(query_embedding.tolist())
     query = {
         "query": {
             "script_score": {
                 "query": {"match_all": {}},
                 "script": {
-                    "source": "dotProduct(params.queryVector, 'ask_vector')+1.0",
+                    "source": "dotProduct(params.queryVector, 'vector')+1.0",
                     "lang": "painless",
                     "params": {
                         "queryVector": query_embedding.tolist()
@@ -80,13 +83,13 @@ def search_similar_dot(index_name, query_text, tokenizer, model, es, top_k=3):
 
 def search_similar_l1(index_name, query_text, tokenizer, model, es, top_k=3):
     query_embedding = embeddings_doc(query_text, tokenizer, model)
-    print(query_embedding.tolist())
+    # print(query_embedding.tolist())
     query = {
         "query": {
             "script_score": {
                 "query": {"match_all": {}},
                 "script": {
-                    "source": "1 / (1 + l1norm(params.queryVector, doc['ask_vector']))",
+                    "source": "1 / (1 + l1norm(params.queryVector, doc['vector']))",
                     "lang": "painless",
                     "params": {
                         "queryVector": query_embedding.tolist()
@@ -104,15 +107,15 @@ def search_similar_l1(index_name, query_text, tokenizer, model, es, top_k=3):
     return similar_documents
 
 
-def search_similar_l2(index_name, query_text, tokenizer, model, es, top_k=3):
+def search_similar_l2(index_name, query_text, tokenizer, model, es ,top_k=3):
     query_embedding = embeddings_doc(query_text, tokenizer, model)
-    print(query_embedding.tolist())
+    # print(query_embedding.tolist())
     query = {
         "query": {
             "script_score": {
                 "query": {"match_all": {}},
                 "script": {
-                    "source": "1 / (1 + l2norm(params.queryVector, doc['ask_vector']))",
+                    "source": "1 / (1 + l2norm(params.queryVector, doc['vector']))",
                     "lang": "painless",
                     "params": {                        "queryVector": query_embedding.tolist()
                     }
@@ -128,27 +131,43 @@ def search_similar_l2(index_name, query_text, tokenizer, model, es, top_k=3):
         similar_documents.append(hit['_source'])
     return similar_documents
 
+def search_knn(index_name, query_text, tokenizer, model, es ,top_k=3):
+    query_embedding = embeddings_doc(query_text, tokenizer, model)
+    # print(query_embedding.tolist())
+    query = {
+        "query": {
+            "script_score": {
+                "query": {"match_all": {}},
+                "script": {
+                    "source": "1 / (1 + l2norm(params.queryVector, doc['vector']))",
+                    "lang": "painless",
+                    "params": {"queryVector": query_embedding.tolist()
+                    }
+                }
+            }
+        },
+        "size": top_k
+    }
+
+    res = es.search(index=index_name, body=query)
+    hits = res['hits']['hits']
+    similar_documents = []
+    for hit in hits:
+        similar_documents.append(hit['_source'])
+    return similar_documents
+
+
 
 
 def main():
-    # 模型下载的地址
-    model_name = 'D:\model\m3e'
-    # ES 信息
-    index_name = "medical_index"
-    # 分词器和模型
-    tokenizer = BertTokenizer.from_pretrained(model_name)
-    model = BertModel.from_pretrained(model_name)
-
-    # ES 连接
-    es = Elasticsearch(["http://elastic:YGP1ww5oWzuagMHeN7aM@152.136.174.19:9200"], verify_certs=False)
-
+    es = Es.es()
     query_text = "我有高血压可以拿党参泡水喝吗"
-
-    similar_documents = search_similar_dot(index_name, query_text, tokenizer, model, es)
+    similar_documents = search_similar_dot(index_name="embedding",query_text=query_text,
+                                           tokenizer=embeding.tokenizer, model=embeding.model, es=es)
     for item in similar_documents:
         print("================================")
-        print('ask：', item['ask'])
-        print('answer：', item['answer'])
+        print('title：', item['title'])
+        print('content', item['text'])
 
 
 if __name__ == '__main__':

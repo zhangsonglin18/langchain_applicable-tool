@@ -1,12 +1,12 @@
 import os
 from app.api.movies_search import mv_v1 as blueprint
-from fastapi import FastAPI, File, UploadFile
+from fastapi import File, UploadFile
 from utils.encode import SentenceModel
 from data_conn.milvus2.milvus_helpers import MilvusHelper
 from data_conn.mysql8.mysql_helpers import MySQLHelper
 from config.configs import UPLOAD_PATH
 from utils.logs import LOGGER
-from program.mvlivus_recom.milvus_pro import Milvus_pro
+from app.utils.milvus_search.milvus_pro import Milvus_pro
 
 
 MODEL = SentenceModel()
