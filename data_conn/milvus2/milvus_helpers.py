@@ -32,13 +32,15 @@ class MilvusHelper:
             LOGGER.error(f"Failed to get collection info to Milvus: {e}")
             sys.exit(1)
 
-    def create_collection(self, collection_name):
+    def create_collection(self, collection_name,fields):
         # Create milvus collection if not exists
         try:
-            field1 = FieldSchema(name="id", dtype=DataType.INT64, descrition="int64", is_primary=True, auto_id=True)
-            field2 = FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, descrition="float vector",
-                                    dim=VECTOR_DIMENSION, is_primary=False)
-            schema = CollectionSchema(fields=[field1, field2], description="collection description")
+            # field1 = FieldSchema(name="id", dtype=DataType.INT64, descrition="int64", is_primary=True, auto_id=True)
+            # field2 = FieldSchema(name="text", dtype=DataType.STRING, descrition="text", is_primary=False)
+            # field3 = FieldSchema(name="content", dtype=DataType.STRING, descrition="content", is_primary=False)
+            # field4 = FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, descrition="float vector",
+            #                         dim=VECTOR_DIMENSION, is_primary=False)
+            schema = CollectionSchema(fields=fields, description="collection description")
             self.collection = Collection(name=collection_name, schema=schema)
             LOGGER.debug(f"Create Milvus collection: {collection_name}")
             return "OK"
@@ -46,15 +48,15 @@ class MilvusHelper:
             LOGGER.error(f"Failed create collection in Milvus: {e}")
             sys.exit(1)
 
-    def insert(self, collection_name, vectors):
+    def insert(self, collection_name, data):
         # Batch insert vectors to milvus collection
         try:
             self.set_collection(collection_name)
-            data = [vectors]
+            # data = [vectors]
             mr = self.collection.insert(data)
             ids = mr.primary_keys
             LOGGER.debug(
-                    f"Insert vectors to Milvus in collection: {collection_name} with {len(vectors)} rows")
+                    f"Insert vectors to Milvus in collection: {collection_name} with {len(data)} rows")
             return ids
         except Exception as e:
             LOGGER.error(f"Failed to insert data to Milvus: {e}")

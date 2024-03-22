@@ -14,8 +14,11 @@ class ESConnector(object):
     def ping(self):
         return self.client.ping()
 
+    def es(self):
+        return self.client
+
     # %% 检查索引是否存在
-    def index_exsit(self,index_name):
+    def index_exsits(self,index_name):
         return self.client.indices.exists(index=index_name)
 #
 # %% 新建索引
@@ -24,8 +27,8 @@ class ESConnector(object):
         return response
 
 # # %% 插入数据
-    def insert_data(self,index_name,document_id,data):
-        response = self.client.index(index=index_name, id=document_id, document=data)
+    def insert_data(self,index_name,document_id,body):
+        response = self.client.index(index=index_name, id=document_id, document=body)
         return response
 #
 # # %% 更新
@@ -33,11 +36,21 @@ class ESConnector(object):
         rp = self.client.update(index=index_name, id=document_id, body={"doc": data})
         return rp
 
+    def delete_index(self,index_name):
+        return self.client.indices.delete(index=index_name)
+
+    def search(self,index_name,query):
+        return self.client.search(index=index_name, body=query)
+
+    def scroll(self,index_name,scroll_id):
+        return self.client.scroll(scroll_id=scroll_id, scroll="1m")
+
+    def clear_scroll(self,scroll_id):
+        return self.client.clear_scroll(scroll_id=scroll_id)
+
+    def close(self):
+        self.client.close()
+
     def __call__(self, *args, **kwargs):
         return self.ping()
-#
-# # %% 检查文档是否存在
-# document_exists = client.exists(index=index_name, id=document_id)
-#
-# # %% 根据ID删除文档
-# response = client.delete(index=index_name, id=document_id)
+

@@ -9,7 +9,7 @@ class BaseParams(object):
     各类型参数的父类
     """
 
-    def __init__(self, conf_fp: str = 'D:\llm_mmkg\config\config.ini'):
+    def __init__(self, conf_fp: str = 'D:\langchain_applicable-tool\config\config.ini'):
         self.config = ConfigParser()
         self.config.read(conf_fp, encoding='utf8')
 
@@ -19,7 +19,7 @@ class ModelParams(BaseParams):
     数据拉取参数类
     """
 
-    def __init__(self, conf_fp: str = 'D:\llm_mmkg\config\config.ini'):
+    def __init__(self, conf_fp: str = 'D:\langchain_applicable-tool\config\config.ini'):
         super(ModelParams, self).__init__(conf_fp)
         section_name = 'model_configs'
         self.embedding_model = self.config.get(section_name, 'embedding_model')
@@ -30,7 +30,7 @@ class ESParams(BaseParams):
     数据拉取参数类
     """
 
-    def __init__(self, conf_fp: str = 'D:\llm_mmkg\config\config.ini'):
+    def __init__(self, conf_fp: str = 'D:\langchain_applicable-tool\config\config.ini'):
         super(ESParams, self).__init__(conf_fp)
         section_name = 'es_configs'
         self.username = self.config.get(section_name, 'username')
@@ -68,3 +68,16 @@ UPLOAD_PATH = os.getenv("UPLOAD_PATH", "tmp/qa-data")
 
 ############### Number of log files ###############
 LOGS_NUM = int(os.getenv("logs_num", "0"))
+Minio_HOST = '152.136.174.19:9000'
+Minio_ACCESS_KEY = 'admin'
+Minio_SECRET_KEY = 'admin123'
+
+##ES config
+ES_HOST = os.getenv("ES_HOST", "152.136.174.19")
+ES_PORT = int(os.getenv("ES_PORT", "9200"))
+ES_USER = os.getenv("ES_USER", "elastic")
+ES_PWD = os.getenv("ES_PWD", "YGP1ww5oWzuagMHeN7aM")
+index_name = os.getenv("index_name", "test")
+
+
+# Elasticsearch(["http://elastic:YGP1ww5oWzuagMHeN7aM@152.136.174.19:9200"]
