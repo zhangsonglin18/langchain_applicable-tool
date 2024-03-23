@@ -41,7 +41,8 @@ class ESParams(BaseParams):
 
 
 class Congif():
-    sql_host='101.200.135.154'
+    # sql_host='101.200.135.154'
+    sql_host = '152.136.174.19'
     sql_port= 33306
     sql_user='root'
     sql_password='123456'
