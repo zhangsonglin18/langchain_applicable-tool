@@ -49,6 +49,7 @@ class Congif():
 
 ############### Milvus Configuration ###############
 MILVUS_HOST = os.getenv("MILVUS_HOST", "101.200.135.154")
+# MILVUS_HOST = os.getenv("MILVUS_HOST", "152.136.174.19")
 MILVUS_PORT = int(os.getenv("MILVUS_PORT", "19530"))
 VECTOR_DIMENSION = int(os.getenv("VECTOR_DIMENSION", "768"))
 INDEX_FILE_SIZE = int(os.getenv("INDEX_FILE_SIZE", "1024"))
