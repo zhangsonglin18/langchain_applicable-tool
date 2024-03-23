@@ -32,11 +32,26 @@ def view_image(minio_client, bucket_name, object_name):
     image = Image.open(BytesIO(image_data))
     image.show()
 
+def view_image1(minio_client,bucket_name,object_name):
+    # 获取对象内容并转换为Pillow中的Image格式
+    object_data = minio_client.get_object(bucket_name, object_name)
+    image_data = object_data.read()
+    image = Image.open(BytesIO(image_data))
+    return image
+
+def view_image2(minio_client,bucket_name,object_name):
+    # 获取对象内容并转换为Pillow中的Image格式
+    object_data = minio_client.get_object(bucket_name, object_name)
+    image_data = object_data.read()
+    image = Image.open(BytesIO(image_data))
+    return image
+
+
 # 示例用法
 
 if __name__ == '__main__':
     buget = "pictures"
-    dir_name_slave = datetime.datetime.now().strftime("%Y-%m-%d")
+    dir_name_slave = "2024-03-23"
     object = "news/" + dir_name_slave + "/" + str(73)  + ".jpg"
     view_image(minioClient, buget, object)
 
