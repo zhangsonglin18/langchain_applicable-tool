@@ -126,7 +126,51 @@ configurations["mapping"]= {
     }
 }
 
+body = {
+    "knn": {
+        "field": "title_vector",
+        "query_vector": "1111111111111111",
+        "k": 10,
+        "num_candidates": 100,
+        "filter": {
+            "bool": {
+                "should": [
+                    {
+                        "term": {
+                            "publisher.keyword": "addison-wesley"
+                        }
+                    },
+                    {
+                        "term": {
+                            "authors.keyword": "robert c. martin"
+                        }
+                    }
+                ],
 
+            }
+        }
+    }}
+
+body3= {
+    "query": {
+        "match": {
+            "summary": "python"
+        }
+    },
+    "knn": {
+        "field": "title_vector",
+        # generate embedding for query so it can be compared to `title_vector`
+        "query_vector" : "",
+        "k": 5,
+        "num_candidates": 10
+    },
+    "rank": {
+        "rrf": {
+            "window_size": 100,
+            "rank_constant": 20
+        }
+    }
+}
 
 if __name__ == '__main__':
     es = ESConnector()

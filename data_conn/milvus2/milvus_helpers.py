@@ -112,3 +112,8 @@ class MilvusHelper:
         except Exception as e:
             LOGGER.error(f"Failed to count vectors in Milvus: {e}")
             sys.exit(1)
+
+if __name__ == "__main__":
+    mio = MilvusHelper()
+    collection_name = "news3"
+    mio.delete_collection(collection_name)

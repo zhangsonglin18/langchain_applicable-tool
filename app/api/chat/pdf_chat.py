@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Body, Request
 
-from data_process.pdf_process import *
+from program.D.data_process.pdf_process import *
 
 router = APIRouter(
     prefix="/chat"

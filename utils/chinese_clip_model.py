@@ -31,6 +31,13 @@ class ChineseClipModel():
             text_features = self.model.get_text_features(**inputs)
             text_features = text_features / text_features.norm(p=2, dim=-1, keepdim=True)
         return text_features
+    def generate_text_features_m(self, text):
+        inputs = self.processor(text=text, padding=True, return_tensors="pt")
+        with torch.no_grad():
+            text_features = self.model.get_text_features(**inputs)
+            text_features = text_features / text_features.norm(p=2, dim=-1, keepdim=True)
+        return text_features.squeeze(0).tolist()
+
 
     def get_simliar_tp(self,texts,image):
         inputs = self.processor(text=texts, images=image, return_tensors="pt", padding=True)
@@ -44,11 +51,14 @@ class ChineseClipModel():
 
 if __name__ == '__main__':
     clip = ChineseClipModel()
-    url = "https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/pokemon.jpeg"
-    url1 = "http://152.136.174.19:9000/minio/pictures/news/2024-03-23/1.jpg"
-    image = Image.open(requests.get(url, stream=True).raw)
-    image.show()
+    # url = "https://clip-cn-beijing.oss-cn-beijing.aliyuncs.com/pokemon.jpeg"
+    # url1 = "http://152.136.174.19:9000/minio/pictures/news/2024-03-23/1.jpg"
+    # image = Image.open(requests.get(url, stream=True).raw)
+    # image.show()
     # Squirtle, Bulbasaur, Charmander, Pikachu in English
     # texts = ["杰尼龟", "妙蛙种子", "小火龙", "皮卡丘"]
     # embeding = clip.generate_image_features(image).squeeze(0).tolist()
     # print(embeding)
+    text = "你是谁"
+    embeding = clip.generate_text_features_m(text)
+    print(len(embeding))
