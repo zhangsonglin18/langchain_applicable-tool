@@ -39,25 +39,28 @@ def main1():
     # ES 连接
     # 读取数据写入ES
     data = pd.read_csv(path, encoding='ANSI')
+    data.fillna('', inplace=True)
     # data = tqdm(len(data))
     for index, row in data.iterrows():
         # 写入前 5000 条进行测试
-        if index>=30:
+        if index>=100:
             break
-        title = row["ask"]
-        content = row["answer"]
+        title = row["ask"][:512]
+        content = row["answer"][:1000]
         # 文本转向量
         embedding_ask = embeding.embeddings_text(text=title)
-        embedding_content = embeding.embeddings_text(text=content)
+        vector = embedding_ask.tolist()
+        # embedding_content = embeding.embeddings_text(text=content)
         body = {
-            "title_vector": embedding_ask.tolist(),
-            "content_vector": embedding_content.tolist(),
+            "vector": vector,
             "title": title,
-            "text": content
+            "text": content,
         }
         es.insert_data(index_name=index_name,document_id=index,body=body)
         # result = add_doc(index_name, index, embedding_ask, title, content, es)
         print(es)
 
 if __name__ == '__main__':
-    main()
+    main1()
+    # print(es.index_exsits("embedding1"))
+

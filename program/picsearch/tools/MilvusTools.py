@@ -6,7 +6,7 @@ embedding = ChineseClipModel()
 class MilvusTools:
 
     def __init__(self):
-       self.client = Milvus("152.136.174.19", "19530")
+       self.client = Milvus("101.200.135.154", "19530")
 
     def create_collection(self, collection_name):
         fields = {"fields": [{"name": "pic_path",

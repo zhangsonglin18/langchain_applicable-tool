@@ -250,8 +250,6 @@ def faq_search(index_name,query,instruction,num_candidates,es,tokenizer,model,k=
         return hits
 
 
-
-
 def main():
     es = Es.es()
     query_text = "我有高血压可以拿党参泡水喝吗"
@@ -263,6 +261,38 @@ def main():
         print('content', item['text'])
 
 
+def generate_hybrid_query(text, vec, size, knn_boost):
+    query = {
+        "query": {
+            "match": {
+                "text": {
+                    "query": text,
+                    "boost": 1
+                }
+            }
+        },
+        "knn": {
+            "field": "vector",
+            "query_vector": vec,
+            "k": 2,
+            "num_candidates": 100,
+            "boost": knn_boost
+        },
+        "size": size,
+        "_source": ["text", "title"]
+    }
+    return query
+
+
 if __name__ == '__main__':
-    main()
+    # main()
+    index_name ="embedding1"
+    es = Es.es()
+    query="我有高血压可以拿党参泡水喝吗"
+    query_embedding = embeddings_doc(query,tokenizer=embeding.tokenizer, model=embeding.model)
+    query_body = generate_hybrid_query(text=query, vec=query_embedding.tolist(), size=3, knn_boost=10)
+    res = es.search(index=index_name, body=query_body)
+    hits = res['hits']['hits']
+    print(hits)
+
 

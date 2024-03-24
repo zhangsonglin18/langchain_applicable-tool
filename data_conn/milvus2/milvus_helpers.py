@@ -50,8 +50,8 @@ class MilvusHelper:
             # data = [vectors]
             mr = self.collection.insert(data)
             ids = mr.primary_keys
-            LOGGER.debug(
-                    f"Insert vectors to Milvus in collection: {collection_name} with {len(data)} rows")
+            # LOGGER.debug(
+            #         f"Insert vectors to Milvus in collection: {collection_name} with {len(data)} rows")
             return ids
         except Exception as e:
             LOGGER.error(f"Failed to insert data to Milvus: {e}")
