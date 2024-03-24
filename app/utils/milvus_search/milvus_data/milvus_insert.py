@@ -57,33 +57,33 @@ def search_collection_news(collection_name, query_text, topk=10):
 
 if __name__ == '__main__':
     collection_name = "news8"
-    embeding_vector = ChineseClipModel()
-    creat_collection_field_news(collection_name)
-    mysql = MySql()
-    query = "SELECT * FROM `q_intelligence`.`news1`"
-    data = mysql.sql_search(query)
-    for row in data:
-        ids = row[0]
-        title = row[2][:500]
-        content = row[3].replace("\n","").replace(" ","")[:1024]
-        embedding = embeding_vector.generate_text_features_m(title)
-        print(content)
-        print(len(content))
-        out = Milvus.insert(collection_name=collection_name, data=[[ids],[title],[content],[embedding]])
-        print(out)
-    # title = "特朗普"
-    # collection_name = "news"
     # embeding_vector = ChineseClipModel()
-    # embeding = embeding_vector.generate_text_features_m(title)
-    # vector = embeding.numpy()
-    # ##输出结果
-    # out_list = ['ids','title','content']
-    # result = Milvus.search_vectors(collection_name=collection_name, vectors=[vector], top_k=5,output_list=out_list)
-    # res =[]
-    # for hits in result:
-    #     for hit in hits:
-    #         print(hit.entity.get('content'))
-    #         res.append(hit.entity.get('content'))
+    # creat_collection_field_news(collection_name)
+    # mysql = MySql()
+    # query = "SELECT * FROM `q_intelligence`.`news1`"
+    # data = mysql.sql_search(query)
+    # for row in data:
+    #     ids = row[0]
+    #     title = row[2][:500]
+    #     content = row[3].replace("\n","").replace(" ","")[:1024]
+    #     embedding = embeding_vector.generate_text_features_m(title)
+    #     print(content)
+    #     print(len(content))
+    #     out = Milvus.insert(collection_name=collection_name, data=[[ids],[title],[content],[embedding]])
+    #     print(out)
+    title = "台军在佩洛西抵达前提高战备"
+    # collection_name = "news"
+    embeding_vector = ChineseClipModel()
+    embeding = embeding_vector.generate_text_features_m(title)
+    vector = embeding
+    ##输出结果
+    out_list = ['ids','title','content']
+    result = Milvus.search_vectors(collection_name=collection_name, vectors=[vector], top_k=5,output_list=out_list)
+    res =[]
+    for hits in result:
+        for hit in hits:
+            print(hit.entity.get('title'))
+            res.append(hit.entity.get('title'))
 
 
 

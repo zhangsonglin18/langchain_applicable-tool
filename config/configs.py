@@ -3,6 +3,7 @@ import os
 class BaseConfig:
     open_ai = "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"
     open_ai1 = "sk-ln0lOOW4xaCLK0nT92367a1852D744E2867d256933B8Bc35"
+    serpapi = "abf771aae1ff6a8b5d61f8bd9aa80afaa79a4501c5f41d9ca54670b9c9866bb4"
 
 class BaseParams(object):
     """
