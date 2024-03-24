@@ -3,6 +3,7 @@ import os
 class BaseConfig:
     open_ai = "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"
     open_ai1 = "sk-ln0lOOW4xaCLK0nT92367a1852D744E2867d256933B8Bc35"
+    serpapi = "abf771aae1ff6a8b5d61f8bd9aa80afaa79a4501c5f41d9ca54670b9c9866bb4"
 
 class BaseParams(object):
     """
@@ -41,7 +42,8 @@ class ESParams(BaseParams):
 
 
 class Congif():
-    sql_host='101.200.135.154'
+    # sql_host='101.200.135.154'
+    sql_host = '152.136.174.19'
     sql_port= 33306
     sql_user='root'
     sql_password='123456'
@@ -49,6 +51,7 @@ class Congif():
 
 ############### Milvus Configuration ###############
 MILVUS_HOST = os.getenv("MILVUS_HOST", "101.200.135.154")
+# MILVUS_HOST = os.getenv("MILVUS_HOST", "152.136.174.19")
 MILVUS_PORT = int(os.getenv("MILVUS_PORT", "19530"))
 VECTOR_DIMENSION = int(os.getenv("VECTOR_DIMENSION", "768"))
 INDEX_FILE_SIZE = int(os.getenv("INDEX_FILE_SIZE", "1024"))

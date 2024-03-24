@@ -22,12 +22,12 @@ class Bucket:
     唯一允许使用的字符（使用大写字母、下划线等命名会报错），长度至少应为3个字符
     """
 
-    def create_bucket(self):
+    def create_bucket(self,bucket_name):
         try:
-            if minioClient.bucket_exists(bucket_name='pictures'):  # bucket_exists：检查桶是否存在
+            if minioClient.bucket_exists(bucket_name=bucket_name):  # bucket_exists：检查桶是否存在
                 print("该存储桶已经存在")
             else:
-                minioClient.make_bucket("pictures")
+                minioClient.make_bucket(bucket_name)
                 print("存储桶创建成功")
         except S3Error as err:
             print(err)
@@ -42,17 +42,17 @@ class Bucket:
             print(err)
 
     # 删除存储桶
-    def get_remove_bucket(self):
+    def get_remove_bucket(self,bucket_name):
         try:
-            minioClient.remove_bucket("pictures")
+            minioClient.remove_bucket(bucket_name)
             print("删除存储桶成功")
         except S3Error as err:
             print(err)
 
     # 列出存储桶中所有对象  或者使用 list_objects_v2也可
-    def get_bucket_files(self):
+    def get_bucket_files(self,bucket_name):
         try:
-            objects = minioClient.list_objects('testfiles', prefix=None,
+            objects = minioClient.list_objects(bucket_name, prefix=None,
                                                recursive=True)  # prefix用于过滤的对象名称前缀
             for obj in objects:
                 print(obj.bucket_name, obj.object_name.encode('utf-8'), obj.last_modified,
@@ -61,9 +61,9 @@ class Bucket:
             print(err)
 
     # 列出存储桶中未完整上传的对象
-    def get_list_incomplete_uploads(self):
+    def get_list_incomplete_uploads(self,bucket_name):
         try:
-            uploads = minioClient.list_incomplete_uploads('testfiles',
+            uploads = minioClient.list_incomplete_uploads(bucket_name,
                                                           prefix=None,
                                                           recursive=True)
             for obj in uploads:
@@ -72,9 +72,9 @@ class Bucket:
             print(err)
 
     # 获取存储桶的当前策略
-    def bucket_policy(self):
+    def bucket_policy(self,bucket_name):
         try:
-            policy = minioClient.get_bucket_policy('pictures')
+            policy = minioClient.get_bucket_policy(bucket_name)
             print(policy)
         except S3Error as err:
             print(err)
@@ -87,10 +87,10 @@ class Bucket:
     #         print(err)
 
     # 获取存储桶上的通知配置
-    def bucket_notification(self):
+    def bucket_notification(self,bucket_name):
         try:
             # 获取存储桶的通知配置。
-            notification = minioClient.get_bucket_notification('testfiles')
+            notification = minioClient.get_bucket_notification(bucket_name)
             print(notification)
             # 如果存储桶上没有任何通知：
             # notification  == {}
@@ -98,21 +98,16 @@ class Bucket:
             print(err)
 
     # 给存储桶设置通知配置
-    def set_bucket_notification(bucket_name, notification):
-        pass
 
     # 删除存储桶上配置的所有通知
-    def remove_all_bucket_notifications(bucket_name):
+    def remove_all_bucket_notifications(self,bucket_name):
         try:
-            minioClient.remove_all_bucket_notifications('mybucket')
+            minioClient.remove_all_bucket_notifications(bucket_name)
         except S3Error as err:
             print(err)
 
-    # 监听存储桶上的通知
-    def listen_bucket_notification(bucket_name, prefix, suffix, events):
-        pass
-
 
 if __name__ == '__main__':
-    Bucket().bucket_policy()
+    bucket_name = "pdffile"
+    Bucket().create_bucket(bucket_name)
 

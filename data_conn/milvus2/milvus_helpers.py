@@ -35,11 +35,6 @@ class MilvusHelper:
     def create_collection(self, collection_name,fields):
         # Create milvus collection if not exists
         try:
-            # field1 = FieldSchema(name="id", dtype=DataType.INT64, descrition="int64", is_primary=True, auto_id=True)
-            # field2 = FieldSchema(name="text", dtype=DataType.STRING, descrition="text", is_primary=False)
-            # field3 = FieldSchema(name="content", dtype=DataType.STRING, descrition="content", is_primary=False)
-            # field4 = FieldSchema(name="embedding", dtype=DataType.FLOAT_VECTOR, descrition="float vector",
-            #                         dim=VECTOR_DIMENSION, is_primary=False)
             schema = CollectionSchema(fields=fields, description="collection description")
             self.collection = Collection(name=collection_name, schema=schema)
             LOGGER.debug(f"Create Milvus collection: {collection_name}")
@@ -55,8 +50,8 @@ class MilvusHelper:
             # data = [vectors]
             mr = self.collection.insert(data)
             ids = mr.primary_keys
-            LOGGER.debug(
-                    f"Insert vectors to Milvus in collection: {collection_name} with {len(data)} rows")
+            # LOGGER.debug(
+            #         f"Insert vectors to Milvus in collection: {collection_name} with {len(data)} rows")
             return ids
         except Exception as e:
             LOGGER.error(f"Failed to insert data to Milvus: {e}")
@@ -89,18 +84,22 @@ class MilvusHelper:
             LOGGER.error(f"Failed to drop collection: {e}")
             sys.exit(1)
 
-    def search_vectors(self, collection_name, vectors, top_k):
+    def search_vectors(self, collection_name, vectors, top_k,output_list,expr=''):
         # Search vector in milvus collection
         try:
             self.set_collection(collection_name)
             self.collection.load()
             search_params = {"metric_type": METRIC_TYPE, "params": {"nprobe": 16}}
-            res = self.collection.search(vectors, anns_field="embedding", param=search_params, limit=top_k)
+            if expr=="":
+                res = self.collection.search(vectors, anns_field="embedding", param=search_params, limit=top_k, output_fields=output_list)
+            else:
+                res = self.collection.search_by_expr(expr, {}, "embedding", search_params, expr=expr,limit=top_k, output_fields=output_list)
             LOGGER.debug(f"Successfully search in collection: {res}")
             return res
         except Exception as e:
             LOGGER.error(f"Failed to search vectors in Milvus: {e}")
             sys.exit(1)
+
 
     def count(self, collection_name):
         # Get the number of milvus collection
@@ -113,3 +112,8 @@ class MilvusHelper:
         except Exception as e:
             LOGGER.error(f"Failed to count vectors in Milvus: {e}")
             sys.exit(1)
+
+if __name__ == "__main__":
+    mio = MilvusHelper()
+    collection_name = "news3"
+    mio.delete_collection(collection_name)

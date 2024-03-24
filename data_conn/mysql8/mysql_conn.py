@@ -27,7 +27,7 @@ class MySql():
         result = self.cursor.fetchall()
         for row in result:
             res.append(row)
-            print(row)
+            # print(row)
         return res
 
     def create_table(self,create_table_query):
@@ -86,6 +86,16 @@ class MySql():
         except pymysql.Error as err:
             # 如果有错误，打印错误消息
             print(f"Error: {err}")
+
+    def delete_all_data(self, table_name):
+        # Delete all the data in mysql table
+        sql = 'delete from ' + table_name + ';'
+        try:
+            self.cursor.execute(sql)
+            self.conn.commit()
+        except pymysql.Error as err:
+            print(f"Error: {err}")
+
 
     def __call__(self, *args, **kwargs):
         try:
