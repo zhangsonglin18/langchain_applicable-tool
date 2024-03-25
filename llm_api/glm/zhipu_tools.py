@@ -1,4 +1,4 @@
-from llm_api.ZhiPu.zhipu_api import ZhiPu
+from llm_api.glm.zhipu_api import ZhiPu
 
 
 class ZhipuTools(ZhiPu):

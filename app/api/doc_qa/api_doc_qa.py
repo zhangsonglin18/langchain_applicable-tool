@@ -9,7 +9,7 @@ from flask import request
 from flask.json import jsonify
 from flask import Blueprint
 
-from program.DocQA.doc_qa import DocQA
+from program.doc_q.doc_qa import DocQA
 # from qa.doc_qa_evaluation import DocQAEvaluation
 # from utils.logger import logger
 

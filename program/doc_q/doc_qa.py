@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # @place: Pudong, Shanghai
-# @file: doc_qa.py
+# @file: doc_q.py
 # @time: 2023/7/22 14:06
 # import cohere
 
