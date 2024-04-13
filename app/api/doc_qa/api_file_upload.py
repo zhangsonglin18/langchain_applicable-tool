@@ -7,7 +7,7 @@ import traceback
 
 from flask import request, jsonify, Blueprint
 
-from program.DocQA.data_processor import DataProcessor
+from program.doc_q.data_processor import DataProcessor
 
 
 api_file_upload = Blueprint('api_file_upload', __name__)
