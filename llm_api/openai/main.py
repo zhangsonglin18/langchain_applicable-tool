@@ -14,5 +14,5 @@ tools = load_tools(["serpapi"])
 # 工具加载后都需要初始化，verbose 参数为 True，会打印全部的执行详情
 if __name__ == '__main__':
     agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
-    # 运行 agent
+    # 运行 agentp
     agent.run("今天的日期是什么? 历史上的今天发生了什么大事?用中文回答")

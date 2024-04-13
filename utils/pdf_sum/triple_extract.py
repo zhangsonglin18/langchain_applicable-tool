@@ -32,3 +32,6 @@ loaded_graph.get_triples()
 #  ('Field of dreams',
 #   "America's future will be built",
 #   'is the ground on which')]
+from langchain.prompts import PromptTemplate,ChatPromptTemplate,SystemMessagePromptTemplate
+from langchain.prompts.example_selector import LengthBasedExampleSelector,NGramOverlapExampleSelector
+
