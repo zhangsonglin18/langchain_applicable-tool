@@ -1,6 +1,6 @@
 from harvesttext import HarvestText
 ht0 = HarvestText()
-from program.pdf_txt.nltk_clear import *
+from program.llm_dataset.pdf_txt.nltk_clear import *
 def clear_txt(path):
     with open(path, 'r',encoding="utf-8") as f:
         content = f.read()
