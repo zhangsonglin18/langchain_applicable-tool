@@ -20,7 +20,7 @@ os.environ["SERPAPI_API_KEY"] = configs.serpapi
 from llm_api.openai_api import openai
 llm = openai().chat_model()
 os.environ['KMP_DUPLICATE_LIB_OK']='TRUE'
-# #  agentp + retriever_tool
+# #  agentl + retriever_tool
 # os.environ["TAVILY_API_KEY"] = getpass.getpass()
 # os.environ["OPENAI_API_KEY"] = "sk-1AK***************"
 
@@ -98,7 +98,7 @@ agent2 = initialize_agent(
     verbose=True,
     prompt=prompt_template,
 )
-# agentp.run("What is the Apple TV show Foundation about? Return the answer in all lower case")
+# agentl.run("What is the Apple TV show Foundation about? Return the answer in all lower case")
 # 把用户的prompt做一个优化：比如add 一个请用中文回答
 print("------------------------------1.聊天任务--------------------")
 resp = agent2.run("你是谁")

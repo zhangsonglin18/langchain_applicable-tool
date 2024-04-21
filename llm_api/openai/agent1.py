@@ -16,7 +16,7 @@ configs =BaseConfig()
 os.environ["SERPAPI_API_KEY"] = configs.serpapi
 from llm_api.openai_api import openai
 llm = openai().chat_model()
-#  agentp + retriever_tool
+#  agentl + retriever_tool
 # os.environ["TAVILY_API_KEY"] = getpass.getpass()
 # os.environ["OPENAI_API_KEY"] = "**************"
 
@@ -76,7 +76,7 @@ agent2 = initialize_agent(
     agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
     verbose=True
 )
-# agentp.run("What is the Apple TV show Foundation about? Return the answer in all lower case")
+# agentl.run("What is the Apple TV show Foundation about? Return the answer in all lower case")
 print("------------------------------1.取水任务--------------------")
 resp = agent2.run("Tora帮我拿瓶水")
 print("…resp:", resp)  # 返回结果
