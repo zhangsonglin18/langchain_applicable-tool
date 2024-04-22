@@ -79,12 +79,12 @@ tora_retriever_tool = create_retriever_tool(  # retriever 2 tool
 
 # search = TavilySearchResults()  # 网络搜索功能
 
-api_wrapper = WikipediaAPIWrapper(top_k_results=1, doc_content_chars_max=100)
-tool_wiki = WikipediaQueryRun(api_wrapper=api_wrapper)
-
+# api_wrapper = WikipediaAPIWrapper(top_k_results=1, doc_content_chars_max=100)
+# tool_wiki = WikipediaQueryRun(api_wrapper=api_wrapper)
+search = load_tools(["serpapi"])
 # llm = ChatOpenAI(temperature=0)
 # llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
-tools = [tora_navigate, tora_retriever_tool,  tora_cap_water, tool_wiki, tora_name]
+tools = [tora_navigate, tora_retriever_tool,  tora_cap_water,search, tora_name]
 tools.append(tora_talk)
 prompt_template = """  
 请用中文回答
@@ -100,18 +100,18 @@ agent2 = initialize_agent(
 )
 # agentl.run("What is the Apple TV show Foundation about? Return the answer in all lower case")
 # 把用户的prompt做一个优化：比如add 一个请用中文回答
-print("------------------------------1.聊天任务--------------------")
-resp = agent2.run("你是谁")
-print("…resp:", resp)  # 返回结果
-print("------------------------------1.取水任务--------------------")
-resp = agent2.run("Tora帮我拿瓶水")
-print("…resp:", resp)  # 返回结果
-print("------------------------------2.知识库问答任务--------------------")
-resp = agent2.run("你知道paxini吗？")  # 问答而非执行任务
-print("…resp:", resp)  # 返回结果
-print("------------------------------3.导航任务--------------------")
-resp = agent2.run("Tora可以带我去你们公司前台吗")
-print("…resp:", resp)  # 返回结果
+# print("------------------------------1.聊天任务--------------------")
+# resp = agent2.run("你是谁")
+# print("…resp:", resp)  # 返回结果
+# print("------------------------------1.取水任务--------------------")
+# resp = agent2.run("Tora帮我拿瓶水")
+# print("…resp:", resp)  # 返回结果
+# print("------------------------------2.知识库问答任务--------------------")
+# resp = agent2.run("你知道paxini吗？")  # 问答而非执行任务
+# print("…resp:", resp)  # 返回结果
+# print("------------------------------3.导航任务--------------------")
+# resp = agent2.run("Tora可以带我去你们公司前台吗")
+# print("…resp:", resp)  # 返回结果
 print("------------------------------4.聊天任务--------------------")
 resp = agent2.run("你知道特斯拉吗？")  # 问答而非执行任务
 print("…resp:", resp)  # 返回结果
