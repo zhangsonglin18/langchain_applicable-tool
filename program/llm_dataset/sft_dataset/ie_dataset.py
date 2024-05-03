@@ -1,4 +1,5 @@
 import json
+import re
 #
 result = []
 # with open("D:/model/data_set/sft_dataset/dev_data_clean_deep.json", "r",encoding="utf-8") as file:
@@ -30,17 +31,38 @@ result = []
 #         res["output"] = str(resu)
 #         result.append(res)
 # print(result)
-prompt_ie = "给出如下参考新闻内容，抽取该新闻中的关系信息，其中生成结果必须包含[head、head_type、relation、tail、tail_type]，生成的关系抽取结果格式如 [{'head': '2018年冬季残奥会闭幕式', 'head_type': '事件', 'relation': '发生地点', 'tail': '平昌奥林匹克体育场', 'tail_type': '地理地区'}, {'head': '2018年冬季残奥会闭幕式', 'head_type': '事件', 'relation': '发生时间', 'tail': '2018年3月18日', 'tail_type': '时间'}]所示，其中参考新闻如下所示："
-with open("D:/model/data_set/extract/train_zh.json", "r",encoding="utf-8") as file:
+# prompt_ie = "给出如下参考新闻内容，抽取该新闻中的关系信息，其中生成结果必须包含[head、head_type、relation、tail、tail_type]，生成的关系抽取结果格式如 [{'head': '2018年冬季残奥会闭幕式', 'head_type': '事件', 'relation': '发生地点', 'tail': '平昌奥林匹克体育场', 'tail_type': '地理地区'}, {'head': '2018年冬季残奥会闭幕式', 'head_type': '事件', 'relation': '发生时间', 'tail': '2018年3月18日', 'tail_type': '时间'}]所示，其中参考新闻如下所示："
+# with open("D:/model/data_set/extract/train_zh.json", "r",encoding="utf-8") as file:
+#     for item in file:
+#         data = json.loads(item)
+#         res = {}
+#         res["instruction"] = prompt_ie
+#         res["input"] = data["text"]
+#         res["output"] = str(data["relation"])
+#         print(res["output"])
+#         result.append(res)
+
+with open("D:/model/data_set/extract/train.json", "r",encoding="utf-8") as file:
     for item in file:
-        data = json.loads(item)
         res = {}
-        res["instruction"] = prompt_ie
-        res["input"] = data["text"]
-        res["output"] = str(data["relation"])
-        result.append(res)
-with open('ie.json', 'w',encoding="utf-8") as json_file:
-    json.dump(result, json_file,ensure_ascii=False,indent=4)
+        item = json.loads(item)
+        res["instruction"] = json.loads(item["instruction"])["instruction"]
+        schema = json.loads(item["instruction"])["schema"]
+        res["input"] = json.loads(item["instruction"])["input"]
+        res["output"] = item["output"]
+        pattern = r'[^\u4e00-\u9fff]'
+        pat = re.sub(pattern, '', res["input"][0])
+        if pat:
+            res["instruction"] = str(res["instruction"]) + "其中shema的格式如下所示：" + str(schema)
+            print(res["instruction"])
+            print(res["output"])
+            result.append(res)
+
+# with open('ie.json', 'w',encoding="utf-8") as json_file:
+#     json.dump(result, json_file,ensure_ascii=False,indent=4)
+
+
+
 
 
 

@@ -15,18 +15,18 @@ def clear_txt(path):
         content = re.sub(pattern, '', content)
         pattern = r'目录.*总论一'
         content = re.sub(pattern, '', content)
-        pattern = r'•[^\u4e00-\u9fff]+'
-        content = re.sub(pattern, '', content)
+
         result = ht0.clean_text(content)
         return result
 import os
 text_out = ""
-source_folder = "D:/model/data_set/docs_out"
-for filename in os.listdir(source_folder):
-    if filename.endswith(".txt"):
-        file_path = os.path.join(source_folder, filename)
-        text = clear_txt(file_path)
-        text_out += text
-with open("tianya.txt", "w", encoding="utf-8") as txt_file:
-    txt_file.write(text_out)
-
+# source_folder = "D:/model/data_set/docs_out"
+# for filename in os.listdir(source_folder):
+#     if filename.endswith(".txt"):
+#         file_path = os.path.join(source_folder, filename)
+#         text = clear_txt(file_path)
+#         text_out += text
+#
+# with open("tianya.txt", "w", encoding="utf-8") as txt_file:
+#     txt_file.write(text_out)
+#
