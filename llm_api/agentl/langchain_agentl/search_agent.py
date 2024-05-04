@@ -16,7 +16,7 @@ llm = openai().chat_model()
 tools = load_tools(["serpapi"])
 tools += [weekday] ## 将自定义的tool添加到tools数组中
 agent = create_react_agent(llm, tools, prompt)
-agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True,handle_parsing_errors=True)
 agent_executor.invoke({"input": "周杰伦生日那天是星期几"})
 # agent = initialize_agent(tools, llm, verbose=True,handle_parsing_errors=True)
 # # 运行 agent
