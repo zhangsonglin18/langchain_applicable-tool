@@ -49,7 +49,7 @@ if __name__ == '__main__':
     from langchain.agents import create_react_agent
     agent = create_react_agent(llm, tools, prompt)
     from langchain.agents import AgentExecutor
-    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True)
+    agent_executor = AgentExecutor(agent=agent, tools=tools, verbose=True,handle_parsing_errors=True)
     agent_executor.invoke({"input": "周杰伦生日那天是星期几"})
 
 

@@ -4,7 +4,7 @@ openai.api_key = "111" #不可为空，为空会报错
 openai.api_base = "http://127.0.0.1:11434/v1"
 # 2. 设置提示词
 prompt = """
-You: What is the weather like today?
+You: 今天天气如何?
 
 """
 
