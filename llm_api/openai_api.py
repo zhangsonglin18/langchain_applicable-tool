@@ -47,5 +47,7 @@ class openai():
         return self.chat(prompt)
 
 if __name__ == '__main__':
-    print(openai()(prompt = "你能帮我写一个Python脚本吗"))
+    from llm_api import ollama_model
+    openai = ollama_model()
+    print(openai(prompt = "你能帮我写一个Python脚本吗"))
 

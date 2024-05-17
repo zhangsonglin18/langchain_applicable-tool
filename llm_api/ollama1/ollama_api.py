@@ -1,18 +1,45 @@
-import openai
-# 设置api_base
-openai.api_key = "111" #不可为空，为空会报错
-openai.api_base = "http://127.0.0.1:11434/v1"
-# 2. 设置提示词
-prompt = """
-You: 今天天气如何?
+import ollama
+from langchain.llms.base import LLM
+import asyncio
+from ollama import AsyncClient
+class ollama_model:
+    def __init__(self,model="qwen:7b"):
+        self.url = "http://127.0.0.1:11434/v1"
+        self.model = model
 
-"""
+    def generate_chat(self,content):
+        response = ollama.chat(model='llama3', messages=[
+          {
+            'role': 'user',
+            'content': content,
+          },
+        ])
+        return response['message']['content']
 
-# 3.调用（可切换模型）
-# resp = openai.ChatCompletion.create(model="llama2", messages=[{"role": "user", "content": prompt}], stream = False)
-resp = openai.ChatCompletion.create(model="qwen:7b", messages=[{"role": "user", "content": prompt}], stream = False)
-# resp = openai.ChatCompletion.create(model="gemma:7b", messages=[{"role": "user", "content": prompt}], stream = False)
+    def stream_chat(self,content):
+        stream = ollama.chat(
+            model='qwen:7b',
+            messages=[{'role': 'user', 'content': content}],
+            stream=True,
+        )
 
-# 4.输出
-print(resp.choices[0].message.content)
+        for chunk in stream:
+          return chunk['message']['content']
+
+    async def chat(self,content):
+        message = {'role': 'user', 'content': content}
+        response = await AsyncClient().chat(model=self.model, messages=[message])
+        return response['message']['content']
+
+    def __call__(self, prompt):
+        return asyncio.run(self.chat(prompt))
+
+if __name__ == '__main__':
+    print(ollama_model()(prompt = "你能帮我写一个Python脚本吗"))
+
+
+
+
+
+
 
