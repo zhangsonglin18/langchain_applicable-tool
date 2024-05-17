@@ -1,7 +1,5 @@
-
 import os
-# os.environ["OPENAI_API_KEY"] = '你的Open AI API Key'
-from  llm_api.openai_api import  openai
+from  llm_api import  openai
 # 1.Load 导入Document Loaders
 from langchain.document_loaders import PyPDFLoader
 from langchain.document_loaders import Docx2txtLoader
