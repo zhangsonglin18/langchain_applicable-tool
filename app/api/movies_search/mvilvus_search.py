@@ -1,7 +1,7 @@
 import os
 from app.api.movies_search import mv_v1 as blueprint
 from fastapi import File, UploadFile
-from utils.encode import SentenceModel
+from utils.embedding_pro.encode import SentenceModel
 from data_conn.milvus2.milvus_helpers import MilvusHelper
 from data_conn.mysql8.mysql_helpers import MySQLHelper
 from config.configs import UPLOAD_PATH

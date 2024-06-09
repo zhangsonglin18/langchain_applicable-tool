@@ -1,6 +1,6 @@
 import sys
 import pandas as pd
-from utils.encode import SentenceModel
+from utils.embedding_pro.encode import SentenceModel
 from config.configs import TOP_K, DEFAULT_TABLE
 from utils.logs import LOGGER
 from data_conn.milvus2.milvus_helpers import MilvusHelper

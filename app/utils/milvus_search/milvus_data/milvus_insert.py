@@ -3,8 +3,8 @@ from app.utils.embedding.m3e_embedding import *
 embeding = M3E_embeddings()
 Milvus = MilvusHelper()
 from data_conn.mysql8.mysql_conn import *
-from pymilvus import connections, FieldSchema, CollectionSchema, DataType, Collection, utility
-from utils.chinese_clip_model import ChineseClipModel
+from pymilvus import FieldSchema, DataType, utility
+from utils.embedding_pro.chinese_clip_model import ChineseClipModel
 ##muilvus向量检索的field设计，对应不同的设计不同类型
 def creat_collection_field(collection_name):
     field1 = FieldSchema(name="id", dtype=DataType.INT64, descrition="int64", is_primary=True, auto_id=True)

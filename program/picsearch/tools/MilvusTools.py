@@ -1,7 +1,7 @@
 from pymilvus import Milvus
 from program.picsearch.tools.MinioTools import MinioTools
 from pymilvus import DataType
-from utils.chinese_clip_model import ChineseClipModel
+from utils.embedding_pro.chinese_clip_model import ChineseClipModel
 embedding = ChineseClipModel()
 class MilvusTools:
 
