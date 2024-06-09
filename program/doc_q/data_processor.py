@@ -9,7 +9,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from utils.db_client import milvus_client
 from utils.db_client import es_client
 # from common.llm_chat_api import get_text_embedding
-from utils.chinese_clip_model import ChineseClipModel
+from utils.embedding_pro.chinese_clip_model import ChineseClipModel
 from utils.logger import logger
 from program.doc_q.file_parser import FileParser
 # from config.config_parser import EMBEDDING_MODEL

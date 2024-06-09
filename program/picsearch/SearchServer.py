@@ -2,7 +2,7 @@ import gradio as gr
 from program.picsearch.tools.MilvusTools import MilvusTools
 # from tools.ResNetEmbeding import ResNetEmbeding
 from program.picsearch.tools.MinioTools import MinioTools
-from utils.chinese_clip_model import ChineseClipModel
+from utils.embedding_pro.chinese_clip_model import ChineseClipModel
 miniotool = MinioTools()
 from PIL import Image
 embedding = ChineseClipModel()
