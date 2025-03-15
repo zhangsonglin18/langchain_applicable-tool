@@ -1,0 +1,8 @@
+2024-03-24 12:31:28,932 £ü DEBUG £ü milvus_helpers.py £ü __init__ £ü 15 £ü Successfully connect to Milvus with HOST: 152.136.174.19 and PORT: 19530
+2024-03-24 12:31:28,938 £ü ERROR £ü milvus_helpers.py £ü set_collection £ü 24 £ü Failed to set collection in Milvus: <SchemaNotReadyException: (code=1, message=Collection 'new' not exist, or you can pass in schema to create one.)>
+2024-03-24 12:32:03,184 £ü DEBUG £ü milvus_helpers.py £ü __init__ £ü 15 £ü Successfully connect to Milvus with HOST: 152.136.174.19 and PORT: 19530
+2024-03-24 12:32:03,213 £ü DEBUG £ü milvus_helpers.py £ü delete_collection £ü 81 £ü Successfully drop collection!
+2024-03-24 12:32:06,912 £ü DEBUG £ü milvus_helpers.py £ü __init__ £ü 15 £ü Successfully connect to Milvus with HOST: 152.136.174.19 and PORT: 19530
+2024-03-24 12:32:06,940 £ü DEBUG £ü milvus_helpers.py £ü delete_collection £ü 81 £ü Successfully drop collection!
+2024-03-24 12:32:11,713 £ü DEBUG £ü milvus_helpers.py £ü __init__ £ü 15 £ü Successfully connect to Milvus with HOST: 152.136.174.19 and PORT: 19530
+2024-03-24 12:32:11,739 £ü DEBUG £ü milvus_helpers.py £ü delete_collection £ü 81 £ü Successfully drop collection!
