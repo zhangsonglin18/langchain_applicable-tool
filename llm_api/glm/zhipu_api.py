@@ -70,7 +70,7 @@ class ZhiPu:
 if __name__ == '__main__':
     question = "写个诗"
     zhipu_api = ZhiPu()
-    print(zhipu_api.get_zhipu_answer_async(question))
+    print(zhipu_api.get_zhipu_answer(question))
 
 
 

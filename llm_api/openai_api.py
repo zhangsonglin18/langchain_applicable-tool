@@ -48,6 +48,6 @@ class openai():
 
 if __name__ == '__main__':
     from llm_api import ollama_model
-    openai = ollama_model()
-    print(openai(prompt = "你能帮我写一个Python脚本吗"))
+    openai = openai()
+    print(openai.chat(prompt = "你能帮我写一个Python脚本吗"))
 
